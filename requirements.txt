@@ -1,3 +1,4 @@
 azure-functions
 microdata
 requests
+azure-storage-blob
