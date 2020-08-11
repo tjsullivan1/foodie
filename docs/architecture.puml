@@ -1,0 +1,24 @@
+@startuml Hello World
+!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/release/2-1/dist
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/Databases/all.puml
+!includeurl AzurePuml/Storage/all.puml
+!includeurl AzurePuml/Compute/all.puml
+!includeurl AzurePuml/Web/all.puml
+
+actor "Person" as personAlias
+actor "Admin" as admin
+AzureFunction(blobConverter, "blobConverter", "Python 3.7", "Triggers on blob create in raw. Converts microdata to json.")
+AzureBlobStorage(raw, "Raw", "Azure Blob, Standard LRS", "Holds pre-processed data (in Microdata format). Could be uploaded manually or via OneDrive with Logic App connector.")
+AzureBlobStorage(clean, "Cleaned", "Azure Blob, Standard LRS", "Holds post-processed data (in JSON format). Inserted via blobConverter function.")
+AzureCosmosDb(cosmos, "CosmosDB", "Cosmos DB Free Tier", "Holds data to be presented via web front-end.")
+AzureWebApp(frontend, "foodie", "Azure App Service", "Python Web Application presenting a read-only interface (to start).")
+
+admin --> raw
+raw --> blobConverter
+blobConverter --> clean
+blobConverter --> cosmos
+frontend --> cosmos
+personAlias --> frontend
+
+@enduml
