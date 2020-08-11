@@ -1,4 +1,4 @@
-@startuml Hello World
+@startuml Foodie
 !define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/release/2-1/dist
 !includeurl AzurePuml/AzureCommon.puml
 !includeurl AzurePuml/Databases/all.puml
